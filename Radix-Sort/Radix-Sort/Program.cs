@@ -79,21 +79,26 @@ class Program
         string projectDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)
             .Parent?.Parent?.Parent?.FullName ?? "";
 
-        string randomPath    = Path.Combine(projectDir, "random_data.csv");
-        string nearlyPath    = Path.Combine(projectDir, "nearly_sorted.csv");
-        string reversePath   = Path.Combine(projectDir, "reverse_sorted.csv");
-        string duplicatePath = Path.Combine(projectDir, "duplicate_data.csv");
+        string randomPath    = Path.Combine(projectDir, "[short]random_data.csv");
+        string nearlyPath    = Path.Combine(projectDir, "[short]nearly_sorted.csv");
+        string reversePath   = Path.Combine(projectDir, "[short]reverse_sorted.csv");
+        string duplicatePath = Path.Combine(projectDir, "[short]duplicate_data.csv");
+        
+        string longrandomPath = Path.Combine(projectDir, "[long]random_data.csv");
 
         int[] randomData      = LoadCSV(randomPath);
         int[] nearlySorted    = LoadCSV(nearlyPath);
         int[] reverseSorted   = LoadCSV(reversePath);
         int[] duplicateData   = LoadCSV(duplicatePath);
+        
+        int[] longrandomData  = LoadCSV(longrandomPath);
 
         Console.WriteLine("\nAll CSVs have been processed successfully.");
 
-        if (randomData.Length > 1)
+        
+        if (longrandomData.Length > 1)
         {
-            var clone = (int[])randomData.Clone();
+            var clone = (int[])longrandomData.Clone();
     
             Stopwatch sw = Stopwatch.StartNew();
             QuickSort(clone, 0, clone.Length - 1);
@@ -103,11 +108,9 @@ class Program
             Console.WriteLine($"Elapsed time: {sw.Elapsed.TotalMilliseconds:F3} ms");
         }
         
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        GC.Collect();
         
         
-        
+
     }
 }
+ 
