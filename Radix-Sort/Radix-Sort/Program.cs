@@ -76,41 +76,84 @@ class Program
 
     static void Main(string[] args)
     {
+        // Base project directory
         string projectDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)
             .Parent?.Parent?.Parent?.FullName ?? "";
 
-        string randomPath    = Path.Combine(projectDir, "[short]random_data.csv");
-        string nearlyPath    = Path.Combine(projectDir, "[short]nearly_sorted.csv");
-        string reversePath   = Path.Combine(projectDir, "[short]reverse_sorted.csv");
-        string duplicatePath = Path.Combine(projectDir, "[short]duplicate_data.csv");
-        
-        string longrandomPath = Path.Combine(projectDir, "[long]random_data.csv");
+        // New Datasets folder path
+        string datasetDir = Path.Combine(projectDir, "Datasets");
 
-        int[] randomData      = LoadCSV(randomPath);
-        int[] nearlySorted    = LoadCSV(nearlyPath);
-        int[] reverseSorted   = LoadCSV(reversePath);
-        int[] duplicateData   = LoadCSV(duplicatePath);
-        
-        int[] longrandomData  = LoadCSV(longrandomPath);
+        // -------------------------
+        // Short CSV paths
+        // -------------------------
+        string randomPath      = Path.Combine(datasetDir, "[short]random_data.csv");
+        string nearlyPath      = Path.Combine(datasetDir, "[short]nearly_sorted.csv");
+        string reversePath     = Path.Combine(datasetDir, "[short]reverse_sorted.csv");
+        string duplicatePath   = Path.Combine(datasetDir, "[short]duplicate_data.csv");
 
-        Console.WriteLine("\nAll CSVs have been processed successfully.");
+        // -------------------------
+        // Long CSV paths
+        // -------------------------
+        string longRandomPath    = Path.Combine(datasetDir, "[long]random_data.csv");
+        string longNearlyPath    = Path.Combine(datasetDir, "[long]nearly_sorted.csv");
+        string longReversePath   = Path.Combine(datasetDir, "[long]reverse_sorted.csv");
+        string longDuplicatePath = Path.Combine(datasetDir, "[long]duplicate_data.csv");
 
-        
-        if (longrandomData.Length > 1)
+        // -------------------------
+        // Load short datasets
+        // -------------------------
+        int[] randomData     = LoadCSV(randomPath);
+        int[] nearlySorted   = LoadCSV(nearlyPath);
+        int[] reverseSorted  = LoadCSV(reversePath);
+        int[] duplicateData  = LoadCSV(duplicatePath);
+
+        // -------------------------
+        // Load long datasets
+        // -------------------------
+        int[] longRandomData    = LoadCSV(longRandomPath);
+        int[] longNearlySorted  = LoadCSV(longNearlyPath);
+        int[] longReverseSorted = LoadCSV(longReversePath);
+        int[] longDuplicateData = LoadCSV(longDuplicatePath);
+
+        Console.WriteLine("\nAll CSV load attempts completed.");
+
+        // -------------------------
+        // Helper for QuickSort timing
+        // -------------------------
+        void TimeQuickSort(int[] data, string label)
         {
-            var clone = (int[])longrandomData.Clone();
-    
+            if (data == null || data.Length <= 1)
+            {
+                Console.WriteLine($"{label}: not enough data (length={data.Length}).");
+                return;
+            }
+
+            var clone = (int[])data.Clone();
+
             Stopwatch sw = Stopwatch.StartNew();
             QuickSort(clone, 0, clone.Length - 1);
             sw.Stop();
-    
-            Console.WriteLine("\nRandom data sorted successfully.");
-            Console.WriteLine($"Elapsed time: {sw.Elapsed.TotalMilliseconds:F3} ms");
-        }
-        
-        
-        
 
+            Console.WriteLine($"{label} sorted successfully.");
+            Console.WriteLine($"  Time: {sw.Elapsed.TotalMilliseconds:F3} ms");
+        }
+
+        // -------------------------
+        // Sort each LONG dataset
+        // -------------------------
+        Console.WriteLine("\n=== QuickSort on LONG datasets ===");
+        TimeQuickSort(longRandomData,    "[long]random_data");
+        TimeQuickSort(longNearlySorted,  "[long]nearly_sorted");
+        TimeQuickSort(longReverseSorted, "[long]reverse_sorted");
+        TimeQuickSort(longDuplicateData, "[long]duplicate_data");
+
+        // -------------------------
+        // If you need to regenerate datasets:
+        // -------------------------
+        //CreateData.CreateDuplicatedCSV(Path.Combine(datasetDir, "[long]duplicate_data.csv"), 1_000_000);
+        //CreateData.CreateNearlySortedCSV(Path.Combine(datasetDir, "[long]nearly_sorted.csv"), 1_000_000);
+        //CreateData.CreateRandomCSV(Path.Combine(datasetDir, "[long]random_data.csv"), 1_000_000);
+        //CreateData.CreateReverseSortedCSV(Path.Combine(datasetDir, "[long]reverse_sorted.csv"), 1_000_000);
     }
 }
  
