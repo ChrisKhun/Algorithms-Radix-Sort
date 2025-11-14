@@ -2,10 +2,11 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Radix_Sort;
 
 class Program
 {
-    // Loads a CSV into a flat 1-D array (int[])
+    // Loads a CSV into a flat array
     public static int[] LoadCSV(string filePath)
     {
         if (!File.Exists(filePath))
@@ -31,103 +32,128 @@ class Program
         return all.ToArray();
     }
 
-// QuickSort using Hoare partition scheme
-    public static void QuickSort(int[] array, int left, int right)
+    // =========================
+    // timing & memory display
+    // =========================
+    public static void TimeSort(
+        string algoName,
+        string datasetLabel,
+        int[] data,
+        Action<int[]> sortAlgorithm)
     {
-        if (array == null || array.Length < 2) return;
-        if (left >= right) return;
-
-        int p = Partition(array, left, right); // returns j such that [left..j] <= pivot <= [j+1..right]
-        QuickSort(array, left, p);
-        QuickSort(array, p + 1, right);
-    }
-
-// Hoare partition (stable bounds contract for QuickSort above)
-    private static int Partition(int[] arr, int left, int right)
-    {
-        int pivot = arr[(left + right) / 2];
-        int i = left - 1;
-        int j = right + 1;
-
-        while (true)
+        if (data == null || data.Length <= 1)
         {
-            do { i++; } while (arr[i] < pivot);
-            do { j--; } while (arr[j] > pivot);
-
-            if (i >= j) return j;
-
-            // swap
-            int tmp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = tmp;
-        }
-    }
-
-    
-    // -----------------------------
-// Merge Sort (top-down)
-// -----------------------------
-    public static void MergeSort(int[] arr, int left, int right)
-    {
-        if (left >= right)
+            Console.WriteLine($"{algoName} on {datasetLabel}: not enough data (length={data?.Length ?? 0}).");
             return;
-
-        int mid = (left + right) / 2;
-
-        MergeSort(arr, left, mid);
-        MergeSort(arr, mid + 1, right);
-
-        Merge(arr, left, mid, right);
-    }
-
-// -----------------------------
-// Merge step
-// -----------------------------
-    private static void Merge(int[] arr, int left, int mid, int right)
-    {
-        int n1 = mid - left + 1;
-        int n2 = right - mid;
-
-        // create temp arrays
-        int[] L = new int[n1];
-        int[] R = new int[n2];
-
-        // copy data into temp arrays
-        for (int i = 0; i < n1; i++)
-            L[i] = arr[left + i];
-
-        for (int j = 0; j < n2; j++)
-            R[j] = arr[mid + 1 + j];
-
-        int p = 0; // L pointer
-        int q = 0; // R pointer
-        int k = left; // merged array pointer
-
-        // merge back into arr
-        while (p < n1 && q < n2)
-        {
-            if (L[p] <= R[q])
-            {
-                arr[k++] = L[p++];
-            }
-            else
-            {
-                arr[k++] = R[q++];
-            }
         }
 
-        // copy any leftovers
-        while (p < n1)
-            arr[k++] = L[p++];
+        // Work on a copy so original stays unchanged
+        var clone = (int[])data.Clone();
 
-        while (q < n2)
-            arr[k++] = R[q++];
+        // Clean up memory BEFORE we measure, so runs are more comparable
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
+
+        // Measure managed memory before
+        long beforeBytes = GC.GetTotalMemory(true);
+
+        // Time the sort
+        Stopwatch sw = Stopwatch.StartNew();
+        sortAlgorithm(clone);
+        sw.Stop();
+
+        // Measure managed memory after
+        long afterBytes = GC.GetTotalMemory(false);
+        long deltaBytes = afterBytes - beforeBytes;
+
+        double timeMs = sw.Elapsed.TotalMilliseconds;
+        double deltaMB = deltaBytes / (1024.0 * 1024.0);
+
+        Console.WriteLine($"{algoName} on {datasetLabel} sorted successfully.");
+        Console.WriteLine($"  Time:   {timeMs:F3} ms");
+        Console.WriteLine($"  Memory: {deltaMB:F6} MB ({deltaBytes} bytes)");
     }
 
 
-    public static void HeapSort(int[] array)
+    // =========================
+    // Algorithm wrappers
+    // =========================
+    public static void QuickSortWrapper(int[] data)
     {
-        // TODO
+        Quicksort.QuickSort(data, 0, data.Length - 1);
+    }
+
+    public static void MergeSortWrapper(int[] data)
+    {
+        Mergesort.MergeSort(data, 0, data.Length - 1);
+    }
+
+    public static void HeapSortWrapper(int[] data)
+    {
+        Heapsort.HeapSort(data);
+    }
+
+    public static void RadixSortWrapper(int[] data)
+    {
+        Radix_Sort.RadixSort.Sort(data);
+    }
+
+    // =========================
+    // Dataset regeneration helpers
+    // =========================
+    private static void DeleteIfExists(string path)
+    {
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+            Console.WriteLine($"Deleted existing file: {path}");
+        }
+    }
+
+    private static void RegenerateDatasets(
+        string datasetDir,
+        int shortSize = 100_000,
+        int longSize = 1_000_000)
+    {
+        // Short CSV paths
+        string randomPath      = Path.Combine(datasetDir, "[short]random_data.csv");
+        string nearlyPath      = Path.Combine(datasetDir, "[short]nearly_sorted.csv");
+        string reversePath     = Path.Combine(datasetDir, "[short]reverse_sorted.csv");
+        string duplicatePath   = Path.Combine(datasetDir, "[short]duplicate_data.csv");
+
+        // Long CSV paths
+        string longRandomPath    = Path.Combine(datasetDir, "[long]random_data.csv");
+        string longNearlyPath    = Path.Combine(datasetDir, "[long]nearly_sorted.csv");
+        string longReversePath   = Path.Combine(datasetDir, "[long]reverse_sorted.csv");
+        string longDuplicatePath = Path.Combine(datasetDir, "[long]duplicate_data.csv");
+
+        // Ensure folder exists
+        Directory.CreateDirectory(datasetDir);
+
+        // Delete old files
+        DeleteIfExists(randomPath);
+        DeleteIfExists(nearlyPath);
+        DeleteIfExists(reversePath);
+        DeleteIfExists(duplicatePath);
+        DeleteIfExists(longRandomPath);
+        DeleteIfExists(longNearlyPath);
+        DeleteIfExists(longReversePath);
+        DeleteIfExists(longDuplicatePath);
+
+        Console.WriteLine("\nRecreating SHORT datasets...");
+        CreateData.CreateRandomCSV(randomPath, shortSize);
+        CreateData.CreateNearlySortedCSV(nearlyPath, shortSize);
+        CreateData.CreateReverseSortedCSV(reversePath, shortSize);
+        CreateData.CreateDuplicatedCSV(duplicatePath, shortSize);
+
+        Console.WriteLine("\nRecreating LONG datasets...");
+        CreateData.CreateRandomCSV(longRandomPath, longSize);
+        CreateData.CreateNearlySortedCSV(longNearlyPath, longSize);
+        CreateData.CreateReverseSortedCSV(longReversePath, longSize);
+        CreateData.CreateDuplicatedCSV(longDuplicatePath, longSize);
+
+        Console.WriteLine("\nDataset regeneration complete.\n");
     }
 
     static void Main(string[] args)
@@ -136,8 +162,18 @@ class Program
         string projectDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)
             .Parent?.Parent?.Parent?.FullName ?? "";
 
-        // New Datasets folder path
+        // Datasets folder path
         string datasetDir = Path.Combine(projectDir, "Datasets");
+
+        // Ask if user wants to regenerate datasets
+        Console.Write("Regenerate CSV datasets? (y/n): ");
+        var key = Console.ReadKey();
+        Console.WriteLine();
+
+        if (char.ToLowerInvariant(key.KeyChar) == 'y')
+        {
+            RegenerateDatasets(datasetDir);
+        }
 
         // -------------------------
         // Short CSV paths
@@ -173,80 +209,40 @@ class Program
 
         Console.WriteLine("\nAll CSV load attempts completed.");
 
-        // -------------------------
-        // Helper for QuickSort timing
-        // -------------------------
-        void TimeQuickSort(int[] data, string label)
-        {
-            if (data == null || data.Length <= 1)
-            {
-                Console.WriteLine($"{label}: not enough data (length={data.Length}).");
-                return;
-            }
+        // ====================================================
+        // RadixSort on LONG datasets
+        // ====================================================
+        Console.WriteLine("\n=== RadixSort on LONG datasets ===");
+        TimeSort("RadixSort", "[long]random_data",    longRandomData,    RadixSortWrapper);
+        TimeSort("RadixSort", "[long]nearly_sorted",  longNearlySorted,  RadixSortWrapper);
+        TimeSort("RadixSort", "[long]reverse_sorted", longReverseSorted, RadixSortWrapper);
+        TimeSort("RadixSort", "[long]duplicate_data", longDuplicateData, RadixSortWrapper);
 
-            var clone = (int[])data.Clone();
-
-            Stopwatch sw = Stopwatch.StartNew();
-            QuickSort(clone, 0, clone.Length - 1);
-            sw.Stop();
-
-            Console.WriteLine($"{label} sorted successfully.");
-            Console.WriteLine($"  Time: {sw.Elapsed.TotalMilliseconds:F3} ms");
-        }
-
-        // -------------------------
-        // Sort each LONG dataset QUICKSORT
-        // -------------------------
+        // ====================================================
+        // QuickSort on LONG datasets
+        // ====================================================
         Console.WriteLine("\n=== QuickSort on LONG datasets ===");
-        TimeQuickSort(longRandomData,    "[long]random_data");
-        TimeQuickSort(longNearlySorted,  "[long]nearly_sorted");
-        TimeQuickSort(longReverseSorted, "[long]reverse_sorted");
-        TimeQuickSort(longDuplicateData, "[long]duplicate_data");
-        
-        // -------------------------
-        // Helper for MergeSort timing
-        // -------------------------
-        void TimeMergeSort(int[] data, string label)
-        {
-            if (data == null || data.Length <= 1)
-            {
-                Console.WriteLine($"{label}: not enough data (length={data.Length}).");
-                return;
-            }
+        TimeSort("QuickSort", "[long]random_data",    longRandomData,    QuickSortWrapper);
+        TimeSort("QuickSort", "[long]nearly_sorted",  longNearlySorted,  QuickSortWrapper);
+        TimeSort("QuickSort", "[long]reverse_sorted", longReverseSorted, QuickSortWrapper);
+        TimeSort("QuickSort", "[long]duplicate_data", longDuplicateData, QuickSortWrapper);
 
-            var clone = (int[])data.Clone();
-
-            Stopwatch sw = Stopwatch.StartNew();
-            MergeSort(clone, 0, clone.Length - 1);
-            sw.Stop();
-
-            Console.WriteLine($"{label} sorted successfully (MergeSort).");
-            Console.WriteLine($"  Time: {sw.Elapsed.TotalMilliseconds:F3} ms");
-        }
-        // -------------------------
-        // Sort each LONG dataset MERGESORT
-        // -------------------------
+        // ====================================================
+        // MergeSort on LONG datasets
+        // ====================================================
         Console.WriteLine("\n=== MergeSort on LONG datasets ===");
-        TimeMergeSort(longRandomData,    "[long]random_data");
-        TimeMergeSort(longNearlySorted,  "[long]nearly_sorted");
-        TimeMergeSort(longReverseSorted, "[long]reverse_sorted");
-        TimeMergeSort(longDuplicateData, "[long]duplicate_data");
+        TimeSort("MergeSort", "[long]random_data",    longRandomData,    MergeSortWrapper);
+        TimeSort("MergeSort", "[long]nearly_sorted",  longNearlySorted,  MergeSortWrapper);
+        TimeSort("MergeSort", "[long]reverse_sorted", longReverseSorted, MergeSortWrapper);
+        TimeSort("MergeSort", "[long]duplicate_data", longDuplicateData, MergeSortWrapper);
 
-
-        
-        // -------------------------
-        // send time data to a json
-        // -------------------------
-        
-
-        // -------------------------
-        // If you need to regenerate datasets:
-        // -------------------------
-        //CreateData.CreateDuplicatedCSV(Path.Combine(datasetDir, "[long]duplicate_data.csv"), 1_000_000);
-        //CreateData.CreateNearlySortedCSV(Path.Combine(datasetDir, "[long]nearly_sorted.csv"), 1_000_000);
-        //CreateData.CreateRandomCSV(Path.Combine(datasetDir, "[long]random_data.csv"), 1_000_000);
-        //CreateData.CreateReverseSortedCSV(Path.Combine(datasetDir, "[long]reverse_sorted.csv"), 1_000_000);
+        // ====================================================
+        // HeapSort on LONG datasets
+        // ====================================================
+        Console.WriteLine("\n=== HeapSort on LONG datasets ===");
+        TimeSort("HeapSort", "[long]random_data",    longRandomData,    HeapSortWrapper);
+        TimeSort("HeapSort", "[long]nearly_sorted",  longNearlySorted,  HeapSortWrapper);
+        TimeSort("HeapSort", "[long]reverse_sorted", longReverseSorted, HeapSortWrapper);
+        TimeSort("HeapSort", "[long]duplicate_data", longDuplicateData, HeapSortWrapper);
     }
-    
 }
- 

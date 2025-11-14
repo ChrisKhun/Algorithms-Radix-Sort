@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mcjuk\\OneDrive\\Desktop\\School\\Algorithms\\Algorithms-Radix-Sort\\Radix-Sort\\Radix-Sort\\Radix-Sort.csproj": {}
+    "F:\\Github Projects\\Algorithms\\Radix-Sort\\Radix-Sort\\Radix-Sort.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mcjuk\\OneDrive\\Desktop\\School\\Algorithms\\Algorithms-Radix-Sort\\Radix-Sort\\Radix-Sort\\Radix-Sort.csproj": {
+    "F:\\Github Projects\\Algorithms\\Radix-Sort\\Radix-Sort\\Radix-Sort.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mcjuk\\OneDrive\\Desktop\\School\\Algorithms\\Algorithms-Radix-Sort\\Radix-Sort\\Radix-Sort\\Radix-Sort.csproj",
+        "projectUniqueName": "F:\\Github Projects\\Algorithms\\Radix-Sort\\Radix-Sort\\Radix-Sort.csproj",
         "projectName": "Radix-Sort",
-        "projectPath": "C:\\Users\\mcjuk\\OneDrive\\Desktop\\School\\Algorithms\\Algorithms-Radix-Sort\\Radix-Sort\\Radix-Sort\\Radix-Sort.csproj",
+        "projectPath": "F:\\Github Projects\\Algorithms\\Radix-Sort\\Radix-Sort\\Radix-Sort.csproj",
         "packagesPath": "C:\\Users\\mcjuk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mcjuk\\OneDrive\\Desktop\\School\\Algorithms\\Algorithms-Radix-Sort\\Radix-Sort\\Radix-Sort\\obj\\",
+        "outputPath": "F:\\Github Projects\\Algorithms\\Radix-Sort\\Radix-Sort\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -43,7 +43,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -64,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
