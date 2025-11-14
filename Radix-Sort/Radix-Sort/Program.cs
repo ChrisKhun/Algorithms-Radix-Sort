@@ -31,7 +31,7 @@ class Program
         return all.ToArray();
     }
 
-    // QuickSort using Hoare partition scheme
+// QuickSort using Hoare partition scheme
     public static void QuickSort(int[] array, int left, int right)
     {
         if (array == null || array.Length < 2) return;
@@ -42,7 +42,7 @@ class Program
         QuickSort(array, p + 1, right);
     }
 
-    // Hoare partition (stable bounds contract for QuickSort above)
+// Hoare partition (stable bounds contract for QuickSort above)
     private static int Partition(int[] arr, int left, int right)
     {
         int pivot = arr[(left + right) / 2];
@@ -63,11 +63,67 @@ class Program
         }
     }
 
-    // Placeholders now take 1-D arrays
-    public static void MergeSort(int[] array, int left, int right)
+    
+    // -----------------------------
+// Merge Sort (top-down)
+// -----------------------------
+    public static void MergeSort(int[] arr, int left, int right)
     {
-        // TODO
+        if (left >= right)
+            return;
+
+        int mid = (left + right) / 2;
+
+        MergeSort(arr, left, mid);
+        MergeSort(arr, mid + 1, right);
+
+        Merge(arr, left, mid, right);
     }
+
+// -----------------------------
+// Merge step
+// -----------------------------
+    private static void Merge(int[] arr, int left, int mid, int right)
+    {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+
+        // create temp arrays
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+
+        // copy data into temp arrays
+        for (int i = 0; i < n1; i++)
+            L[i] = arr[left + i];
+
+        for (int j = 0; j < n2; j++)
+            R[j] = arr[mid + 1 + j];
+
+        int p = 0; // L pointer
+        int q = 0; // R pointer
+        int k = left; // merged array pointer
+
+        // merge back into arr
+        while (p < n1 && q < n2)
+        {
+            if (L[p] <= R[q])
+            {
+                arr[k++] = L[p++];
+            }
+            else
+            {
+                arr[k++] = R[q++];
+            }
+        }
+
+        // copy any leftovers
+        while (p < n1)
+            arr[k++] = L[p++];
+
+        while (q < n2)
+            arr[k++] = R[q++];
+    }
+
 
     public static void HeapSort(int[] array)
     {
@@ -139,13 +195,49 @@ class Program
         }
 
         // -------------------------
-        // Sort each LONG dataset
+        // Sort each LONG dataset QUICKSORT
         // -------------------------
         Console.WriteLine("\n=== QuickSort on LONG datasets ===");
         TimeQuickSort(longRandomData,    "[long]random_data");
         TimeQuickSort(longNearlySorted,  "[long]nearly_sorted");
         TimeQuickSort(longReverseSorted, "[long]reverse_sorted");
         TimeQuickSort(longDuplicateData, "[long]duplicate_data");
+        
+        // -------------------------
+        // Helper for MergeSort timing
+        // -------------------------
+        void TimeMergeSort(int[] data, string label)
+        {
+            if (data == null || data.Length <= 1)
+            {
+                Console.WriteLine($"{label}: not enough data (length={data.Length}).");
+                return;
+            }
+
+            var clone = (int[])data.Clone();
+
+            Stopwatch sw = Stopwatch.StartNew();
+            MergeSort(clone, 0, clone.Length - 1);
+            sw.Stop();
+
+            Console.WriteLine($"{label} sorted successfully (MergeSort).");
+            Console.WriteLine($"  Time: {sw.Elapsed.TotalMilliseconds:F3} ms");
+        }
+        // -------------------------
+        // Sort each LONG dataset MERGESORT
+        // -------------------------
+        Console.WriteLine("\n=== MergeSort on LONG datasets ===");
+        TimeMergeSort(longRandomData,    "[long]random_data");
+        TimeMergeSort(longNearlySorted,  "[long]nearly_sorted");
+        TimeMergeSort(longReverseSorted, "[long]reverse_sorted");
+        TimeMergeSort(longDuplicateData, "[long]duplicate_data");
+
+
+        
+        // -------------------------
+        // send time data to a json
+        // -------------------------
+        
 
         // -------------------------
         // If you need to regenerate datasets:
@@ -155,5 +247,6 @@ class Program
         //CreateData.CreateRandomCSV(Path.Combine(datasetDir, "[long]random_data.csv"), 1_000_000);
         //CreateData.CreateReverseSortedCSV(Path.Combine(datasetDir, "[long]reverse_sorted.csv"), 1_000_000);
     }
+    
 }
  
