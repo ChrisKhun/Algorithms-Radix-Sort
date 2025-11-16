@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="08c01c61-cc9b-423f-b4f5-24bd584b6783" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Radix-Sort/ConvertData.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/Datasets/[long]duplicate_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/Datasets/[long]duplicate_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/Datasets/[long]nearly_sorted.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/Datasets/[long]nearly_sorted.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/Datasets/[long]random_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/Datasets/[long]random_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/Datasets/[short]duplicate_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/Datasets/[short]duplicate_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/Datasets/[short]nearly_sorted.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/Datasets/[short]nearly_sorted.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/Datasets/[short]random_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/Datasets/[short]random_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/bin/Debug/net9.0/Radix-Sort.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/bin/Debug/net9.0/Radix-Sort.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/bin/Debug/net9.0/Radix-Sort.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/bin/Debug/net9.0/Radix-Sort.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/bin/Debug/net9.0/Radix-Sort.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/bin/Debug/net9.0/Radix-Sort.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/Radix-Sort.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/apphost.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/ref/Radix-Sort.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/ref/Radix-Sort.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/refint/Radix-Sort.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Debug/net9.0/refint/Radix-Sort.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Radix-Sort.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Radix-Sort.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/Radix-Sort.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/Radix-Sort.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radix-Sort/sort_results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Radix-Sort/sort_results.csv" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="35Zw79Rwc9sgTS0Wve1YbZYi48u" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/mcjuk/OneDrive/Desktop/School/Algorithms/Algorithms-Radix-Sort/Radix-Sort"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="08c01c61-cc9b-423f-b4f5-24bd584b6783" name="Changes" comment="" />
+      <created>1763330733809</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1763330733809</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
