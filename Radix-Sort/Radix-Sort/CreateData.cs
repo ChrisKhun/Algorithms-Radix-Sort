@@ -41,22 +41,22 @@ public static class CreateData
     }
 
     // ---------------------------------------------------------
-    // NEARLY SORTED DATASET: shuffle every 40 elements
-    // ---------------------------------------------------------
+// NEARLY SORTED DATASET: shuffle every 5 elements
+// ---------------------------------------------------------
     public static void CreateNearlySortedCSV(string filePath, int n = 1_000_000)
     {
         int[] numbers = new int[n];
         for (int i = 0; i < n; i++)
             numbers[i] = i + 1;
 
-        const int blockSize = 40;
+        const int blockSize = 5; // <-- changed from 40 to 5
         Random rand = new Random();
 
         for (int start = 0; start < n; start += blockSize)
         {
             int end = Math.Min(start + blockSize, n);
 
-            // Fisher-Yates inside block
+            // Fisher-Yates inside each 5-element block
             for (int i = end - 1; i > start; i--)
             {
                 int j = rand.Next(start, i + 1);
@@ -77,7 +77,7 @@ public static class CreateData
             }
         }
 
-        Console.WriteLine($"Created NEARLY SORTED CSV '{filePath}' using 40-element block shuffling.");
+        Console.WriteLine($"Created NEARLY SORTED CSV '{filePath}' using 5-element block shuffling.");
     }
 
     // ---------------------------------------------------------
